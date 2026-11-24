@@ -1,0 +1,16 @@
+-- PENDENTE: SQL do relatório "Demonstrativo de Despesas" do Sistema de Compras
+-- (Relatórios → Requisições → DMAE), período de 01/01 a 31/12 do exercício.
+--
+-- Peça à TI a consulta que o próprio sistema usa para esse relatório e cole aqui no lugar desta.
+-- Ela deve devolver UMA LINHA POR ITEM, com as colunas abaixo (mesmos nomes; a ordem não importa).
+-- Parâmetros: $1 = exercício (ex.: 2025); $2 = último dia do mês de referência (ex.: 2025-08-31).
+-- Use $2 como data final do período, para que cada mês guarde os números daquele mês.
+--
+-- nr_requisicao, dt_ano_requisicao, cd_funcao, cd_sub_funcao, cd_programa, cd_proj_atividade,
+-- nr_empenho, dt_empenho, dt_ano_empenho, cd_reduzido, ficha_mae, vr_orcado, vl_acrescimo,
+-- vl_cancelado, cd_item_despesa, desc_item, nr_emp_req, cd_divisao, nm_divisao, secao, sub_secao,
+-- nm_centro_custo, cd_empresa, cd_filial_empresa, nm_razao_social, pessoa, vl_empenhado, vl_a_somar,
+-- vl_liquidado, vl_anulado, vl_pago, nm_pessoa, natureza, desc_natureza, tipo, vl_reserva, local_sql
+--
+-- (Enquanto este arquivo tiver a palavra PENDENTE na primeira linha, o sincronizador não roda esta fonte.)
+select 1 where $1::int is null and $2::date is null

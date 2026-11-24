@@ -1,0 +1,17 @@
+{
+  "name": "orcamento-sincronizador",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Leva os dados do PostgreSQL interno do DMAE para o Supabase do Sistema de Orçamento.",
+  "scripts": {
+    "sincronizar": "node sincronizar.mjs",
+    "vigiar": "node sincronizar.mjs --vigiar",
+    "importar-planilha": "node importar-planilha.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
+    "exceljs": "^4.4.0",
+    "pg": "^8.16.3"
+  }
+}

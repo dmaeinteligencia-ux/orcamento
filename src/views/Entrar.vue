@@ -27,7 +27,7 @@ async function enviar() {
   <div class="tela-entrar">
     <div class="painel caixa-entrar">
       <img src="/logo-dmae.png" alt="DMAE · Prefeitura de Uberlândia" />
-      <h1>Novo sistema</h1>
+      <h1>Orçamento</h1>
       <p class="suave">Núcleo de Inteligência de Dados</p>
       <form @submit.prevent="enviar">
         <label for="email">E-MAIL</label>
