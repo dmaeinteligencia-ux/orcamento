@@ -3,8 +3,8 @@
   "slug": "orcamento",
   "descricao": "Acompanhamento orçamentário e financeiro do DMAE, no lugar da planilha de Orçamento.",
   "area": "Orçamento",
-  "status": "desenvolvimento",
-  "url": "https://orcamento-dmae.vercel.app",
+  "status": "piloto",
+  "url": "https://orcamento-eight-ivory.vercel.app",
   "responsavel": "Setor de Orçamento",
   "portal": true,
   "monitorar": {
