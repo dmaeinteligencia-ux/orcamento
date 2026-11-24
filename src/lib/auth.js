@@ -17,3 +17,14 @@ export async function entrar(email, senha) {
 }
 
 export const sair = () => (modoDemo ? Promise.resolve() : supabase.auth.signOut())
+
+// Envia o e-mail com o link para criar uma nova senha (abre /nova-senha).
+export async function pedirNovaSenha(email) {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/nova-senha` })
+  if (error) throw new Error('Não foi possível enviar o e-mail agora. Tente de novo em instantes.')
+}
+
+export async function trocarSenha(senha) {
+  const { error } = await supabase.auth.updateUser({ password: senha })
+  if (error) throw new Error(error.message)
+}

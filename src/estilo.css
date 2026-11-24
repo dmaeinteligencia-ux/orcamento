@@ -120,21 +120,56 @@ h1, h2 { margin: 0; }
 .num.zero { color: var(--n300); }
 .paginacao { display: flex; gap: 1rem; align-items: center; justify-content: space-between; padding: .75rem 1rem; border-top: 1px solid var(--n100); font-size: .82rem; color: var(--n500); }
 
-/* ---- Entrar ---- */
-.tela-entrar { display: grid; grid-template-columns: 1.1fr 1fr; min-height: 100vh; }
-.entrar-marca { position: relative; overflow: hidden; display: grid; align-content: space-between; gap: 2.5rem; padding: 2.5rem; background: var(--p700); color: #fff; }
-.entrar-marca img { height: 40px; width: auto; max-width: 100%; }
-.entrar-marca h1 { max-width: 12ch; font: 800 2.4rem/1.05 var(--display); }
-.entrar-marca p { max-width: 38ch; margin: .75rem 0 0; font-size: .95rem; color: var(--p100); }
-.entrar-marca small { font-size: .75rem; color: var(--p200); }
-.entrar-marca svg { position: absolute; bottom: -40px; right: -60px; width: 460px; opacity: .16; pointer-events: none; }
-.faixa-marca { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: linear-gradient(90deg, var(--p700) 0 62%, #fff 62% 64%, var(--verde-marca) 64% 100%); }
-.entrar-form { display: grid; place-items: center; padding: 2.5rem; background: #fff; }
-.entrar-form form { display: grid; gap: 1rem; width: 100%; max-width: 340px; }
-.entrar-form h2 { font: 800 1.5rem/1.2 var(--display); }
-.entrar-form label { display: grid; gap: .375rem; }
+/* ---- Entrar (cartão de vidro sobre degradê) ---- */
+.fundo-entrar {
+  position: relative; min-height: 100vh; display: grid; place-items: center; padding: 96px 16px 64px; overflow: hidden;
+  background:
+    radial-gradient(800px 600px at 15% 20%, var(--p500) 0, transparent 60%),
+    radial-gradient(700px 600px at 90% 85%, rgba(46, 155, 72, .55) 0, transparent 60%),
+    radial-gradient(600px 500px at 80% 10%, #4589D3 0, transparent 55%),
+    #002D5B;
+}
+.fundo-entrar::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px);
+  background-size: 44px 44px; -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%); mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
+.fundo-entrar .logo { position: absolute; top: 32px; left: 40px; height: 28px; }
+.fundo-entrar .rodape { position: absolute; bottom: 22px; color: var(--p200); font-size: .75rem; }
+.vidro {
+  position: relative; z-index: 2; width: min(420px, 100%); padding: 36px; border-radius: 20px;
+  background: rgba(255, 255, 255, .94); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+  box-shadow: 0 30px 80px -20px rgba(0, 10, 30, .6);
+}
+.etiqueta {
+  display: inline-flex; align-items: center; gap: .4rem; margin-bottom: 14px; padding: 6px 10px; border-radius: 999px;
+  background: var(--p50); color: var(--p700); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+}
+.etiqueta::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.form-entrar { display: grid; gap: 14px; }
+.form-entrar h2 { font: 800 1.6rem/1.15 var(--display); }
+.form-entrar p { margin: .25rem 0 0; }
+.form-entrar label { display: grid; gap: .375rem; }
+.form-entrar .campo { min-height: 46px; border-radius: 10px; background: var(--n25); }
+.form-entrar .botao { padding: 14px; border-radius: 10px; background: linear-gradient(90deg, var(--p700), var(--p500)); text-decoration: none; }
+.form-entrar .botao:hover { background: var(--p800); }
+.form-entrar .link { border: 0; background: none; color: var(--p700); font: inherit; font-size: .84rem; cursor: pointer; }
+.form-entrar .link:hover { text-decoration: underline; }
+.form-entrar .ok { color: var(--sucesso); font-size: .85rem; }
+.flutuante {
+  position: absolute; z-index: 1; display: grid; gap: 2px; padding: 14px 18px; border-radius: 14px; color: #fff;
+  background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .2);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 20px 40px -20px rgba(0, 0, 0, .5);
+}
+.flutuante span { font-size: .75rem; color: var(--p200); }
+.flutuante b { font: 800 1.05rem var(--display); }
+.flutuante.k1 { left: 8%; top: 28%; transform: rotate(-4deg); }
+.flutuante.k2 { right: 8%; top: 22%; transform: rotate(3deg); }
+.flutuante.k3 { left: 12%; bottom: 16%; transform: rotate(2deg); }
+.flutuante.k4 { right: 11%; bottom: 20%; transform: rotate(-3deg); }
 
 @media (max-width: 1200px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1100px) { .flutuante { display: none; } }
 @media (max-width: 1023px) {
   .lateral { display: none; }
   .abas-celular { display: flex; gap: .25rem; overflow-x: auto; padding: 0 1rem; background: #fff; border-bottom: 1px solid var(--n100); }
@@ -148,8 +183,8 @@ h1, h2 { margin: 0; }
   .usuario .nome { display: none; }
   .conteudo { padding: 16px; }
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tela-entrar { grid-template-columns: 1fr; }
-  .entrar-marca { padding: 2rem; }
+  .vidro { padding: 26px 22px; }
+  .fundo-entrar .logo { left: 50%; transform: translateX(-50%); }
 }
 .lista.compacta th, .lista.compacta td { padding-left: .55rem; padding-right: .55rem; }
 .kpi { align-content: start; }

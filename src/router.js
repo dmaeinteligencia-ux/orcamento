@@ -5,6 +5,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/entrar', component: () => import('./views/Entrar.vue'), meta: { publica: true } },
+    { path: '/nova-senha', component: () => import('./views/NovaSenha.vue'), meta: { publica: true, comSessao: true } },
     { path: '/', component: () => import('./views/Painel.vue'), meta: { titulo: 'Painel' } },
     { path: '/requisicoes', component: () => import('./views/Requisicoes.vue'), meta: { titulo: 'Requisições', abas: '1 e 2' } },
     { path: '/despesa', component: () => import('./views/Despesa.vue'), meta: { titulo: 'Despesa por ficha', abas: '5' } },
@@ -13,6 +14,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
+  if (to.meta.comSessao) return
   if (!to.meta.publica && !auth.usuario) return '/entrar'
   if (to.path === '/entrar' && auth.usuario) return '/'
 })
