@@ -1,0 +1,16 @@
+-- PENDENTE: SQL do "Anexo 02 Despesa Detalhada por Natureza" do Sistema de Contabilidade
+-- (Relatórios → Orçamento → Anexos da Lei 4.320/64), exercício inteiro até a data de hoje.
+--
+-- Peça à TI a consulta que o próprio sistema usa para esse relatório e cole aqui no lugar desta.
+-- Ela deve devolver UMA LINHA POR FICHA, com as colunas abaixo (mesmos nomes; a ordem não importa).
+-- Parâmetros: $1 = exercício (ex.: 2025); $2 = último dia do mês de referência (ex.: 2025-08-31).
+-- Use $2 como data final do período, para que cada mês guarde os números daquele mês.
+--
+-- ficha, vl_liquidado, vl_empenhado, vl_liquidado_acul, vl_empenhado_acul, vl_pago, vl_pago_acul,
+-- vl_cancelado, vl_suplementar, vl_cancelado_2, funcao, sub_funcao, programa, proj_atividade,
+-- natureza_despesa, exercicio, departamento, departamento_nome, secretaria, secretaria_nome,
+-- funcao_nome, programa_nome, subfuncao_nome, natureza_nome, acao_nome, projativ, escrituracao,
+-- id_altera_dotacao, id_altera_dotacao_gestao
+--
+-- (Enquanto este arquivo tiver a palavra PENDENTE na primeira linha, o sincronizador não roda esta fonte.)
+select 1 where $1::int is null and $2::date is null
