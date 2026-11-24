@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import Valor from '../components/Valor.vue'
 import Carregando from '../components/Carregando.vue'
+import Cabecalho from '../components/Cabecalho.vue'
 import { estado } from '../lib/estado'
 import { resumoRequisicoes, buscarRequisicoes } from '../lib/dados'
 import { modoDemo } from '../lib/supabase'
@@ -44,15 +45,19 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="painel">
-    <h2>Resumo das requisições em andamento</h2>
-    <p class="suave nota">Aba 2 da planilha: soma do valor de reserva por programa. Capital = natureza 4, custeio = natureza 3.</p>
+  <Cabecalho titulo="Requisições em andamento" subtitulo="Abas 1 e 2 da planilha, vindas do Sistema de Compras (Demonstrativo de Despesas)." />
+
+  <section class="cartao">
+    <div class="cartao-topo">
+      <b class="cartao-titulo">Resumo por programa</b>
+      <span class="cartao-nota">Soma do valor de reserva · capital = natureza 4, custeio = natureza 3</span>
+    </div>
     <div class="tabela-rolagem">
-      <table>
+      <table class="lista">
         <thead><tr><th>Programa</th><th>Capital</th><th>Custeio</th><th>Total</th></tr></thead>
         <tbody>
           <tr v-for="r in resumoOrdenado" :key="r.programa">
-            <td>{{ r.programa }} · {{ NOMES[r.programa] }}</td>
+            <td><span class="codigo">{{ r.programa }}</span> {{ NOMES[r.programa] }}</td>
             <td><Valor :v="r.capital" /></td><td><Valor :v="r.custeio" /></td><td><Valor :v="r.total" /></td>
           </tr>
         </tbody>
@@ -61,20 +66,19 @@ onMounted(async () => {
     </div>
   </section>
 
-  <section class="painel">
-    <h2>Requisições</h2>
-    <p class="suave nota">Aba 1 da planilha, vinda do Sistema de Compras (Demonstrativo de Despesas).</p>
+  <section class="cartao">
+    <div class="cartao-topo"><b class="cartao-titulo">Requisições</b><span class="cartao-nota">{{ total }} linhas</span></div>
     <div class="filtros">
-      <input v-model="busca" type="search" placeholder="Buscar por requisição, ficha, item, divisão, fornecedor ou natureza" />
+      <input v-model="busca" class="campo" type="search" placeholder="Buscar por requisição, ficha, item, divisão, fornecedor ou natureza" />
       <label v-if="!modoDemo" class="marcar"><input v-model="soComReserva" type="checkbox" /> só com reserva</label>
     </div>
     <Carregando :carregando="carregando" :erro="erro">
       <div class="tabela-rolagem">
-        <table class="compacta">
+        <table class="lista">
           <thead><tr><th>Requisição</th><th>Ficha</th><th>Programa</th><th class="texto">Item</th><th class="texto">Divisão</th><th class="texto">Natureza</th><th>Empenhado</th><th>Pago</th><th>Reserva</th></tr></thead>
           <tbody>
             <tr v-for="(r, i) in linhas" :key="i">
-              <td>{{ r.nr_requisicao }}/{{ r.dt_ano_requisicao }}</td><td>{{ r.cd_reduzido }}</td><td>{{ r.cd_programa }}</td>
+              <td class="codigo">{{ r.nr_requisicao }}/{{ r.dt_ano_requisicao }}</td><td class="codigo">{{ r.cd_reduzido }}</td><td>{{ r.cd_programa }}</td>
               <td class="texto">{{ r.desc_item }}</td><td class="texto">{{ r.nm_divisao }}</td>
               <td class="texto">{{ r.natureza }} {{ r.desc_natureza }}</td>
               <td><Valor :v="r.vl_empenhado" /></td><td><Valor :v="r.vl_pago" /></td><td><Valor :v="r.vl_reserva" /></td>
@@ -84,9 +88,9 @@ onMounted(async () => {
         </table>
       </div>
       <div class="paginacao">
-        <button class="botao secundario" :disabled="pagina === 0" @click="pagina--">‹ anterior</button>
-        <span class="suave">página {{ pagina + 1 }} de {{ paginas }} · {{ total }} linhas</span>
-        <button class="botao secundario" :disabled="pagina + 1 >= paginas" @click="pagina++">próxima ›</button>
+        <button class="botao secundario pequeno" :disabled="pagina === 0" @click="pagina--">‹ Anterior</button>
+        <span>Página {{ pagina + 1 }} de {{ paginas }}</span>
+        <button class="botao secundario pequeno" :disabled="pagina + 1 >= paginas" @click="pagina++">Próxima ›</button>
       </div>
     </Carregando>
   </section>

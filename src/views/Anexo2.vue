@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import Valor from '../components/Valor.vue'
 import Carregando from '../components/Carregando.vue'
+import Cabecalho from '../components/Cabecalho.vue'
 import { estado } from '../lib/estado'
 import { despesaAnexo2 } from '../lib/dados'
 
@@ -26,17 +27,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="painel">
-    <h2>Anexo 02 · Despesa por natureza</h2>
-    <p class="suave nota">Aba 5.1 da planilha, vinda do Sistema de Contabilidade (Anexos da Lei 4.320/64).</p>
-    <div class="filtros"><input v-model="busca" type="search" placeholder="Ficha, programa, natureza ou ação" /></div>
+  <Cabecalho titulo="Anexo 02 · Despesa por natureza" subtitulo="Aba 5.1 da planilha, vinda do Sistema de Contabilidade (Anexos da Lei 4.320/64)." />
+  <section class="cartao">
+    <div class="filtros"><input v-model="busca" class="campo" type="search" placeholder="Ficha, programa, natureza ou ação" /></div>
     <Carregando :carregando="carregando" :erro="erro">
       <div class="tabela-rolagem">
-        <table class="compacta">
+        <table class="lista compacta">
           <thead><tr><th>Ficha</th><th>Programa</th><th class="texto">Ação</th><th class="texto">Natureza</th><th v-for="[c, r] in COLUNAS" :key="c">{{ r }}</th></tr></thead>
           <tbody>
             <tr v-for="l in visiveis" :key="l.ficha">
-              <td>{{ l.ficha }}</td><td>{{ l.programa }}</td><td class="texto">{{ l.proj_atividade }} {{ l.acao_nome }}</td>
+              <td class="codigo">{{ l.ficha }}</td><td>{{ l.programa }}</td><td class="texto">{{ l.proj_atividade }} {{ l.acao_nome }}</td>
               <td class="texto">{{ l.natureza_despesa }} {{ l.natureza_nome }}</td>
               <td v-for="[c] in COLUNAS" :key="c"><Valor :v="l[c]" /></td>
             </tr>

@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import Valor from '../components/Valor.vue'
 import Carregando from '../components/Carregando.vue'
+import Cabecalho from '../components/Cabecalho.vue'
 import { estado } from '../lib/estado'
 import { despesaPorFicha } from '../lib/dados'
 
@@ -48,27 +49,24 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="painel">
-    <h2>Despesa detalhada por natureza</h2>
-    <p class="suave nota">
-      Aba 5 da planilha. Requisições vêm do Compras; empenhado e pago, do Anexo 02 (acumulado no ano).
-      Saldo = orçado atualizado − requisições − empenhado. Suplementação entra na etapa 2.
-    </p>
+  <Cabecalho titulo="Despesa por ficha"
+    subtitulo="Aba 5 da planilha. Saldo = orçado atualizado − requisições − empenhado. Suplementação entra na etapa 2." />
+  <section class="cartao">
     <div class="filtros">
-      <select v-model="grupoFiltro"><option value="">Todos os programas</option><option v-for="g in grupos" :key="g">{{ g }}</option></select>
-      <input v-model="busca" type="search" placeholder="Ficha, natureza ou ação" />
+      <select v-model="grupoFiltro" class="campo"><option value="">Todos os programas</option><option v-for="g in grupos" :key="g">{{ g }}</option></select>
+      <input v-model="busca" class="campo" type="search" placeholder="Ficha, natureza ou ação" />
       <label class="marcar"><input v-model="esconderZeradas" type="checkbox" /> esconder fichas zeradas</label>
     </div>
     <Carregando :carregando="carregando" :erro="erro">
       <div class="tabela-rolagem">
-        <table class="compacta">
+        <table class="lista compacta">
           <thead><tr><th>Ficha</th><th class="texto">Natureza</th><th>Tipo</th><th>Fonte</th><th v-for="[c, r] in COLUNAS" :key="c">{{ r }}</th></tr></thead>
           <tbody v-for="g in arvore" :key="g.grupo">
             <tr class="nivel-grupo"><td :colspan="4 + COLUNAS.length">{{ g.grupo }}</td></tr>
             <template v-for="a in g.acoes" :key="a.acao">
               <tr class="nivel-acao"><td :colspan="4 + COLUNAS.length">{{ a.acao }}</td></tr>
               <tr v-for="f in a.fichas" :key="f.ficha">
-                <td>{{ f.ficha }}</td><td class="texto">{{ f.natureza_desc }}</td><td>{{ f.tipo_ficha }}</td><td>{{ f.fonte }}</td>
+                <td class="codigo">{{ f.ficha }}</td><td class="texto">{{ f.natureza_desc }}</td><td>{{ f.tipo_ficha }}</td><td>{{ f.fonte }}</td>
                 <td v-for="[c] in COLUNAS" :key="c"><Valor :v="f[c]" /></td>
               </tr>
               <tr class="total-acao"><td colspan="4">Total da ação</td><td v-for="[c] in COLUNAS" :key="c"><Valor :v="a.total[c]" /></td></tr>
